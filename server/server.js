@@ -18,6 +18,14 @@ app.post('/todos', (req, res) => {
     }).catch(e => {
       res.status(400).send(e)
     })
+});
+
+app.get('/todos', (req, res)=>{
+  Todo.find().then(todos => {
+    res.send({todos})
+  }).catch(e => {
+    res.status(400).send(e)
+  })
 })
 
 app.listen(3000, () => {
