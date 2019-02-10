@@ -1,0 +1,10 @@
+{
+  "name": "todo-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Louis",
+  "license": "MIT",
+  "dependencies": {
+    "mongodb": "^3.1.13"
+  }
+}
