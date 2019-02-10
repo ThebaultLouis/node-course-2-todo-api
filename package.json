@@ -4,6 +4,12 @@
   "main": "index.js",
   "author": "Louis",
   "license": "MIT",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "engines": {
+    "node": "11.6.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
