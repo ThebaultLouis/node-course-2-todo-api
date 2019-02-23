@@ -56,7 +56,6 @@ app.delete('/todos/:id', (req, res) => {
   if(!ObjectId.isValid(id)){
     res.status(400).send()
   }
-
   Todo.findByIdAndRemove({
     _id: id
   }).then(todo => {
@@ -92,6 +91,25 @@ app.patch('/todos/:id', (req, res) => {
   }).catch(e => {
     res.status(400).send();
   })
+});
+
+// User
+app.post('/users', (req, res) => {
+  var body = _.pick(req.body, ['email', 'password'])
+
+  var user = new User(body)
+  // user.tokens = {access: 'coucou', token: 'coucou'}
+
+  user.generateAuthToken().then(token => {
+    res.header('x-auth', token).send(user)
+  }).catch(e => res.status(400).send(e))
+
+  // user.save().then(() => {
+  //   return user.generateAuthToken()
+  // }).then(token => {
+  //   res.header('x-auth', token).send(user)
+  // }).catch(e => res.status(400).send(e))
+
 });
 
 
