@@ -1,12 +1,39 @@
+const {ObjectID} = require('mongodb')
+
 const {SHA256} = require('crypto-js')
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
 
-var data = {id: 10}
-var token = jwt.sign(data, '123abc')
-console.log(token)
 
-var decoded = jwt.verify(token, '123abc')
-console.log('decoded', decoded)
+const userOneId = new ObjectID();
+const userOneToken = jwt.sign(
+  {_id: userOneId,
+    access: 'auth'
+  }, 'abc123').toString()
+
+console.log(userOneToken)
+
+// var password = '123abc';
+// console.log(jwt.sign({password}, 'coucou'))
+
+// bcrypt.genSalt(10, (err, salt) => {
+//   bcrypt.hash(password, salt, (err, hash) => {
+//     console.log(hash)
+//   })
+// })
+//
+// var hashedPassword = '$2a$10$vvsMLaU2uVUpCCnmMLJClutVzXYKxrj8oKgvQp6aw8KGZkGMRh59m'
+//
+// bcrypt.compare(password, hashedPassword, (err, res) => {
+//   console.log(res)
+// })
+
+// var data = {id: 10}
+// var token = jwt.sign(data, '123abc')
+// console.log(token)
+//
+// var decoded = jwt.verify(token, '123abc')
+// console.log('decoded', decoded)
 
 // var message = 'I am user number 3'
 // var hash = SHA256(message).toString()
