@@ -228,3 +228,48 @@ describe('POST /users', () => {
       .end(done)
   })
 })
+
+describe('POST users/login', () => {
+  it('Should login user and return token', done => {
+    request(app)
+      .post('/users/login')
+      .send({
+        email: users[1].email,
+        password: users[1].password
+      })
+      .expect(200)
+      .expect(res => {
+        expect(res.header['x-auth']).toBeTruthy()
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err);
+        }
+
+        User.findById(users[1]._id).then(user => {
+          done()
+        }).catch(e => done(e))
+      })
+  })
+  it('Should reject invalid login', done => {
+    request(app)
+      .post('/users/login')
+      .send({
+        email: users[1].email,
+        password: users[1].password + '1'
+      })
+      .expect(400)
+      .expect(res => {
+        expect(res.header['x-auth']).not.toBeTruthy()
+      })
+      .end((err, res) => {
+        if (err) {
+          return done(err)
+        }
+        User.findById(users[1]._id).then(user => {
+          expect(user.tokens.length).toBe(0)
+          })
+          done()
+        }).catch(e => done(e))
+  })
+})
